@@ -24,25 +24,29 @@ int main(int ac, char **av)
 			error_common();
 			return (1);
 		}
-		init_argument(ac, av, &arg);
+		if (!init_argument(ac, av, &arg))
+			return (1);
 		init_philo(&arg, &philo);
-		for (int i = 0 ; i < philo->arg->philo_num ; i++)
-		{
-			printf("%d id, %d left %d right\n", philo[i].id, philo[i].left_fork , philo[i].right_fork);
-		}
-		// exit(1);
+		// for (int i = 0 ; i < philo->arg->philo_num ; i++)
+		// {
+		// 	printf("%d id, %d left %d right\n", philo[i].id, philo[i].left_fork , philo[i].right_fork);
+		// }
 		philo_start(philo, &arg);
 		monitor(philo);
 		mutex_destroy(&arg);
-		int	i;
-
-		i = -1;
-		while (++i < philo->arg->philo_num)
-			pthread_join(philo[i].thread_id, NULL);
+		join_thread(philo);
 	}
 	else
 		error_input_cnt();
+}
 
+void	join_thread(t_philo *philo)
+{
+	int	i;
+
+	i = -1;
+	while (++i < philo->arg->philo_num)
+		pthread_join(philo[i].thread_id, NULL);
 }
 
 void	monitor(t_philo *philo)
@@ -60,7 +64,7 @@ void	monitor(t_philo *philo)
 			cur_time = get_time();
 			if ((cur_time - philo[i].last_meal) > philo[i].arg->time_todie)
 			{
-				printf("%ld %d died\n", (cur_time - philo[i].last_meal), i + 1);
+				printf("%ld %d died\n", (cur_time - philo[i].arg->create_time), i + 1);
 				j = -1;
 				while (++j < philo->arg->philo_num)
 					philo[j].arg->is_die = 1;
@@ -107,10 +111,6 @@ void	*thread_start(void *input)
 		if (!survive_check(philo))
 			break;
 
-		// if (philo->id % 2 == 1 && philo->eat_cnt == 1)
-		// {
-		// 	usleep(100);
-		// }
 		pthread_mutex_lock(&philo->arg->mutex_fork[philo->left_fork]);
 
 		printf_time(philo, "is pick up");
@@ -184,7 +184,7 @@ int	init_philo(t_argument *arg, t_philo **philo)
 	return (1);
 }
 
-void	init_argument(int ac, char **av, t_argument *arg)
+int	init_argument(int ac, char **av, t_argument *arg)
 {
 	int	i;
 
@@ -199,11 +199,19 @@ void	init_argument(int ac, char **av, t_argument *arg)
 		arg->must_it_num = -1;
 	arg->create_time = get_time();
 	arg->forks = malloc(sizeof(int) * arg->philo_num);
+	if (!arg->forks)
+		return (0);
 	arg->mutex_fork = malloc(sizeof(pthread_mutex_t) * arg->philo_num);
+	if (!arg->mutex_fork)
+	{
+		free(arg->forks);
+		return (0);
+	}
 	pthread_mutex_init(&arg->mutex_global, NULL);
 	while (++i < arg->philo_num)
 	{
 		arg->forks[i] = 0;
 		pthread_mutex_init(&arg->mutex_fork[i], NULL);
 	}
+	return (1);
 }

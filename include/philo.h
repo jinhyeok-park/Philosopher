@@ -6,7 +6,7 @@
 /*   By: jinhyeok <jinhyeok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 16:51:28 by jinhyeok          #+#    #+#             */
-/*   Updated: 2023/08/31 21:03:13 by jinhyeok         ###   ########.fr       */
+/*   Updated: 2023/09/01 14:56:59 by jinhyeok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ int		ft_atoi(char *str);
 long    ft_atol(char *str);
 
 int		init_philo(t_argument *arg, t_philo **philo);
-void	init_argument(int ac, char **av, t_argument *arg);
+int		init_argument(int ac, char **av, t_argument *arg);
 int	    philo_start(t_philo *philo, t_argument *arg);
 void	*thread_start(void *input);
+void	join_thread(t_philo *philo);
 
 void	destroy_mutex(t_philo *philo, t_argument *arg);
 void	init_mutex(t_philo *philo, t_argument *arg);
