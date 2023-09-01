@@ -107,6 +107,10 @@ void	*thread_start(void *input)
 		if (!survive_check(philo))
 			break;
 
+		// if (philo->id % 2 == 1 && philo->eat_cnt == 1)
+		// {
+		// 	usleep(100);
+		// }
 		pthread_mutex_lock(&philo->arg->mutex_fork[philo->left_fork]);
 
 		printf_time(philo, "is pick up");
@@ -124,12 +128,14 @@ void	*thread_start(void *input)
 		usleep(philo->arg->time_toeat * 1000);
 
 		printf_time(philo, "is sleeping");
-		usleep(philo->arg->time_tosleep * 1000);
-		printf_time(philo, "is thinking");
 		philo->arg->forks[philo->right_fork] = NOTUSING;
 		pthread_mutex_unlock(&philo->arg->mutex_fork[philo->right_fork]);
+
 		philo->arg->forks[philo->left_fork] = NOTUSING;
 		pthread_mutex_unlock(&philo->arg->mutex_fork[philo->left_fork]);
+		usleep(philo->arg->time_tosleep * 1000);
+
+		printf_time(philo, "is thinking");
 	}
 	pthread_mutex_unlock(&philo->arg->mutex_global);
 	return NULL;
