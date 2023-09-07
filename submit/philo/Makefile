@@ -6,7 +6,7 @@
 #    By: jinhyeok <jinhyeok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/21 19:16:02 by jinhyeok          #+#    #+#              #
-#    Updated: 2023/09/06 19:00:38 by jinhyeok         ###   ########.fr        #
+#    Updated: 2023/09/07 11:23:25 by jinhyeok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,11 @@ NAME = philo
 SOURCES = src/error.c \
 		  src/main.c \
 		  src/checker.c \
+		  src/free.c \
+		  src/thread.c \
 		  src/get_time.c \
-		  src/philo_utils.c
+		  src/philo_utils.c\
+		  src/philo_init.c
 B_SOURCES =
 INCLUDE = include
 

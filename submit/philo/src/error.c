@@ -1,21 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_time.c                                         :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinhyeok <jinhyeok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/24 12:43:01 by jinhyeok          #+#    #+#             */
-/*   Updated: 2023/09/06 14:58:22 by jinhyeok         ###   ########.fr       */
+/*   Created: 2023/08/21 18:57:51 by jinhyeok          #+#    #+#             */
+/*   Updated: 2023/09/06 19:57:56 by jinhyeok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long    get_time(void)
+void	error_input_cnt(void)
 {
-    struct timeval time;
+	char	*str;
+	int		len;
+	int		i;
 
-    gettimeofday(&time, NULL);
-    return (time.tv_sec * 1000) + (time.tv_usec * 0.001);
+	str = "input value error\n";
+	i = -1;
+	len = 0;
+	while (str[++i])
+		len++;
+	write(2, str, len);
+}
+
+int	error_common(void)
+{
+	char	*str;
+	int		len;
+	int		i;
+
+	str = "error_check\n";
+	i = -1;
+	len = 0;
+	while (str[++i])
+		len++;
+	return (write(2, str, len));
+}
+
+int	error_init(void)
+{
+	return (write(2, "error_init\n", 11));
 }
