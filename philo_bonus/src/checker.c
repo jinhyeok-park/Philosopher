@@ -6,7 +6,7 @@
 /*   By: jinhyeok <jinhyeok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 19:56:15 by jinhyeok          #+#    #+#             */
-/*   Updated: 2023/09/11 20:26:03 by jinhyeok         ###   ########.fr       */
+/*   Updated: 2023/09/13 14:59:57 by jinhyeok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	philo_checker(int ac, char **av)
 			if (!is_digit(av[i][j]))
 				return (0);
 		}
-		if (ft_atoi(av[i]) == 0)
+		if (ft_atoi(av[i]) <= 0)
 			return (0);
 	}
 	return (1);

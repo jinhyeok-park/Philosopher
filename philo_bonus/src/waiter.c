@@ -6,7 +6,7 @@
 /*   By: jinhyeok <jinhyeok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:27:34 by jinhyeok          #+#    #+#             */
-/*   Updated: 2023/09/13 14:47:09 by jinhyeok         ###   ########.fr       */
+/*   Updated: 2023/09/13 15:01:49 by jinhyeok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	waiter(t_argument *arg, pid_t *child_ids)
 {
-	if (arg->must_it_num != -1)
+	if (arg->must_it_num != -1 && arg->philo_num != 1)
 	{
 		while (1)
 		{
