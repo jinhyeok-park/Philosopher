@@ -6,7 +6,7 @@
 #    By: jinhyeok <jinhyeok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/21 19:16:02 by jinhyeok          #+#    #+#              #
-#    Updated: 2023/09/06 19:00:38 by jinhyeok         ###   ########.fr        #
+#    Updated: 2023/09/12 13:46:11 by jinhyeok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,14 @@ NAME = philo
 SOURCES = src/error.c \
 		  src/main.c \
 		  src/checker.c \
+		  src/free.c \
+		  src/thread.c \
 		  src/get_time.c \
-		  src/philo_utils.c
-B_SOURCES =
+		  src/philo_utils.c\
+		  src/philo_init.c
 INCLUDE = include
 
 M_OBJ = $(SOURCES:.c=.o)
-B_OBJ = $(B_SOURCES:.c=.o)
 
 ifdef BONUS
 	OBJECTS = $(B_OBJ)
@@ -39,8 +40,6 @@ $(NAME): $(OBJECTS)
 %.o: %.c
 	$(CC) $(CFLAGS) -I $(INCLUDE) -c $< -o $@
 
-bonus:
-	make BONUS=1 all
 
 clean:
 	rm -rf $(OBJECTS)
@@ -48,6 +47,7 @@ clean:
 fclean: clean
 	rm -rf $(NAME)
 
-re: fclean all
+re: fclean 
+	make all
 
 .PHONY: all clean fclean re bonus

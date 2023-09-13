@@ -5,28 +5,26 @@
 #                                                     +:+ +:+         +:+      #
 #    By: jinhyeok <jinhyeok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/08/21 19:16:02 by jinhyeok          #+#    #+#              #
-#    Updated: 2023/09/07 11:23:25 by jinhyeok         ###   ########.fr        #
+#    Created: 2023/09/07 11:33:41 by jinhyeok          #+#    #+#              #
+#    Updated: 2023/09/12 14:56:16 by jinhyeok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-NAME = philo
-SOURCES = src/error.c \
-		  src/main.c \
+CFLAGS = -Wall -Wextra -Werror 
+NAME = philo_bonus
+SOURCES = src/main.c \
 		  src/checker.c \
-		  src/free.c \
-		  src/thread.c \
-		  src/get_time.c \
-		  src/philo_utils.c\
-		  src/philo_init.c
-B_SOURCES =
+		  src/error.c \
+		  src/init.c \
+		  src/waiter.c \
+		  src/process.c \
+		  src/utils.c \
+
 INCLUDE = include
 
 M_OBJ = $(SOURCES:.c=.o)
-B_OBJ = $(B_SOURCES:.c=.o)
 
 ifdef BONUS
 	OBJECTS = $(B_OBJ)
@@ -42,15 +40,13 @@ $(NAME): $(OBJECTS)
 %.o: %.c
 	$(CC) $(CFLAGS) -I $(INCLUDE) -c $< -o $@
 
-bonus:
-	make BONUS=1 all
-
 clean:
 	rm -rf $(OBJECTS)
 
 fclean: clean
 	rm -rf $(NAME)
 
-re: fclean all
+re: fclean
+	make all
 
 .PHONY: all clean fclean re bonus

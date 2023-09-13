@@ -6,7 +6,7 @@
 /*   By: jinhyeok <jinhyeok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 16:53:10 by jinhyeok          #+#    #+#             */
-/*   Updated: 2023/09/07 11:24:59 by jinhyeok         ###   ########.fr       */
+/*   Updated: 2023/09/13 14:28:43 by jinhyeok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ int	main(int ac, char **av)
 	if (ac >= 5 && ac <= 6)
 	{
 		if (!philo_checker(ac, av))
-		{
-			error_common();
-			return (1);
-		}
+			return (error_common());
 		if (!init_argument(ac, av, &arg))
 			return (error_init());
 		if (!init_philo(&arg, &philo))
@@ -85,17 +82,19 @@ void	monitor(t_philo *philo)
 		while (++i < philo->arg->philo_num)
 		{
 			pthread_mutex_lock(&philo->arg->mutex_global);
+			if (philo->arg->must_it_num != -1 \
+			&& philo->arg->must_it_num <= philo[i].eat_cnt)
+			{
+				if (is_full_print(++is_full, philo))
+					return ;
+			}
 			if ((get_time() - philo->arg->create_time > philo->arg->time_todie \
 			&& get_time() - philo[i].last_meal > philo->arg->time_todie))
 			{
 				print_die(philo, i);
 				return ;
 			}
-			else if (philo->arg->must_it_num == philo[i].eat_cnt)
-				is_full++;
 			pthread_mutex_unlock(&philo->arg->mutex_global);
 		}
-		if (is_full_print(is_full, philo))
-			return ;
 	}
 }

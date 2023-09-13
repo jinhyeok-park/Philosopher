@@ -1,21 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_time.c                                         :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinhyeok <jinhyeok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/24 12:43:01 by jinhyeok          #+#    #+#             */
-/*   Updated: 2023/09/06 14:58:22 by jinhyeok         ###   ########.fr       */
+/*   Created: 2023/09/06 19:56:15 by jinhyeok          #+#    #+#             */
+/*   Updated: 2023/09/11 20:26:03 by jinhyeok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
-long    get_time(void)
+int	philo_checker(int ac, char **av)
 {
-    struct timeval time;
+	int	i;
+	int	j;
 
-    gettimeofday(&time, NULL);
-    return (time.tv_sec * 1000) + (time.tv_usec * 0.001);
+	i = 0;
+	while (++i < ac)
+	{
+		j = -1;
+		while (av[i][++j])
+		{
+			if (!is_digit(av[i][j]))
+				return (0);
+		}
+		if (ft_atoi(av[i]) == 0)
+			return (0);
+	}
+	return (1);
+}
+
+int	is_digit(char c)
+{
+	return (c >= 48 && c <= 57);
 }
